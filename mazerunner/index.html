@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <script>
+        var maze = [
+            [1, 1, 1, 1, 1, 1, 1],
+            [1, 0, 0, 0, 0, 0, 3],
+            [1, 0, 1, 0, 1, 0, 1],
+            [0, 0, 1, 0, 0, 0, 1],
+            [1, 0, 1, 0, 1, 0, 1],
+            [1, 0, 0, 0, 0, 0, 1],
+            [1, 2, 1, 0, 1, 0, 1],
+        ];
+
+        function mazeRunner(maze, directions) {
+            // Code here
+            let startingPoint = [];
+            for (let i = 0; i < maze.length; i++) {
+                for (let j = 0; j < maze[i].length; j++) {
+                    if (maze[i][j] === 2) {
+                        startingPoint = [i, j];
+                    }
+                }
+            }
+
+            while (directions.length > 0) {
+                let move = directions.shift();
+
+                //console.log(maze[startingPoint[0]][startingPoint[1]]);
+                //                 if (maze[startingPoint[0]][startingPoint[1]] === 3) {
+                //                     return "Finish";
+                //                 }
+
+                if (
+                    startingPoint[0] < 0 ||
+                    startingPoint[0] >= maze.length ||
+                    startingPoint[1] < 0 ||
+                    startingPoint[1] >= maze[0].length ||
+                    maze[startingPoint[0]][startingPoint[1]] === 1
+                ) {
+                    return "Dead";
+                }
+
+                if (move === "N") {
+                    startingPoint[0] = startingPoint[0] - 1;
+                }
+                if (move === "E") {
+                    startingPoint[1] = startingPoint[1] + 1;
+                }
+                if (move === "W") {
+                    startingPoint[1] = startingPoint[1] - 1;
+                }
+                if (move === "S") {
+                    startingPoint[0] = startingPoint[0] + 1;
+                }
+                if (
+                    startingPoint[0] < 0 ||
+                    startingPoint[0] >= maze.length ||
+                    startingPoint[1] < 0 ||
+                    startingPoint[1] >= maze[0].length ||
+                    maze[startingPoint[0]][startingPoint[1]] === 1
+                ) {
+                    return "Dead";
+                }
+                if (maze[startingPoint[0]][startingPoint[1]] === 3) {
+                    return "Finish";
+                }
+            }
+
+            if (
+                startingPoint[0] < 0 ||
+                startingPoint[0] >= maze.length ||
+                startingPoint[1] < 0 ||
+                startingPoint[1] >= maze[0].length ||
+                maze[startingPoint[0]][startingPoint[1]] === 1
+            ) {
+                return "Dead";
+            }
+
+            return "Lost";
+        }
+
+        console.log(
+            // mazeRunner(maze, ["N", "N", "N", "N", "N", "E", "E", "E", "E", "E", "W", "W"])
+            mazeRunner(maze, ["N", "N", "N", "W", "W"])
+        );
+
+    </script>
+</body>
+
+</html>

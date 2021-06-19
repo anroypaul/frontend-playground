@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    <style>
+        body,
+        html {
+            height: 100%;
+            margin: 0;
+            /* The image used */
+            background-image: url("no_text.gif");
+            animation-play-state: paused;
+            /* Full height */
+            height: 100%;
+
+            /* Center and scale the image nicely */
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .buttons {
+            position: absolute;
+            margin-left: auto;
+            margin-right: auto;
+            top: 50%;
+            left: 0;
+            right: 0;
+            text-align: center;
+        }
+    </style>
+    <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
+    <!-- <img src="no_text.gif" alt="vaporave rulezz"/> -->
+    <div id="player"></div>
+
+    <div class="buttons">
+        <button id="play">Play</button>
+        <button id="pause">Pause</button>
+    </div>
+    <script>
+        // 2. This code loads the IFrame Player API code asynchronously.
+        var tag = document.createElement('script');
+
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        // 3. This function creates an <iframe> (and YouTube player)
+        //    after the API code downloads.
+        var player;
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('player', {
+                height: '0',
+                width: '640',
+                videoId: '5qap5aO4i9A',
+                events: {
+                    //'onReady': onPlayerReady,
+                    //'onStateChange': onPlayerStateChange
+                }
+            });
+        }
+
+        // 4. The API will call this function when the video player is ready.
+        function onPlayerReady() {
+            event.preventDefault();
+            console.log('clicked play')
+            player.playVideo();
+        }
+
+        // 4. The API will call this function when the video player is ready.
+        function onPlayerPause(event) {
+            console.log('clicked pause')
+            player.pauseVideo();
+        }
+
+        // 5. The API calls this function when the player's state changes.
+        //    The function indicates that when playing a video (state=1),
+        //    the player should play for six seconds and then stop.
+        var done = false;
+        function onPlayerStateChange(event) {
+            if (event.data == YT.PlayerState.PLAYING && !done) {
+                setTimeout(stopVideo, 6000);
+                done = true;
+            }
+        }
+        function stopVideo() {
+            player.stopVideo();
+        }
+
+        document.getElementById("play").addEventListener('click', function () {
+            document.body.style.setProperty("background-image", `url("with_text.gif")`);
+            player.playVideo();
+        });
+        document.getElementById("pause").addEventListener('click', function () {
+            document.body.style.setProperty("background-image", `url("no_text.gif")`);
+            player.pauseVideo();
+        });
+    </script>
+</body>
+
+</html>
